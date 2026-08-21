@@ -1,0 +1,6 @@
+{
+  "name": "Intelligent Resume Screening & Semantic Ranking",
+  "description": "Explainable neural semantic matching, resume parsing, ranking, and AI recruiter assistant for unstructured technical resumes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
