@@ -9,8 +9,6 @@ import { JobsPage } from './pages/JobsPage.js';
 import { UploadPage } from './pages/UploadPage.js';
 import { AnalyticsPage } from './pages/AnalyticsPage.js';
 import { SettingsPage } from './pages/SettingsPage.js';
-import { LoginPage } from './pages/LoginPage.js';
-import { RegisterPage } from './pages/RegisterPage.js';
 import { CandidateDetailsModal } from './components/CandidateDetailsModal.js';
 import { CandidateCompareModal } from './components/CandidateCompareModal.js';
 import { CreateJobModal } from './components/CreateJobModal.js';
@@ -21,8 +19,6 @@ import { Loader2 } from 'lucide-react';
 
 export function App() {
   const { user, loading: authLoading } = useAuth();
-  const [authView, setAuthView] = useState<'login' | 'register'>('login');
-
   // Application Data State
   const [currentTab, setCurrentTab] = useState<NavTab>('dashboard');
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -131,7 +127,7 @@ export function App() {
     }
   };
 
-  // Authentication guards
+  // Wait for the automatic demo session before loading application data.
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
@@ -141,13 +137,6 @@ export function App() {
         </div>
       </div>
     );
-  }
-
-  if (!user) {
-    if (authView === 'register') {
-      return <RegisterPage onSwitchToLogin={() => setAuthView('login')} />;
-    }
-    return <LoginPage onSwitchToRegister={() => setAuthView('register')} />;
   }
 
   const currentJob = jobs.find(j => j.id === selectedJobId) || jobs[0] || null;
@@ -160,7 +149,6 @@ export function App() {
         selectedJobId={selectedJobId}
         onSelectJob={(id) => setSelectedJobId(id)}
         onOpenAIChat={() => setIsAIChatOpen(true)}
-        onReseedData={loadAppData}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onOpenCreateJob={() => setIsCreateJobOpen(true)}
