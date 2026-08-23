@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { User, Job, ParsedResume, CandidateAnalysis, CandidateStatus } from '../src/types.js';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join('/tmp', 'neural-resume-data')
+  : path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 
 export interface DatabaseSchema {
