@@ -20,7 +20,7 @@ const upload = multer({
   limits: { fileSize: 15 * 1024 * 1024 } // 15MB limit
 });
 
-async function startServer() {
+export async function returnApp() {
   const app = express();
 
   app.use(cors());
@@ -575,9 +575,14 @@ Extract:
     });
   }
 
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  return app;
+}
+
+if (!process.env.VERCEL) {
+  returnApp().then((app) => {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on http://localhost:${PORT}`);
+    });
   });
 }
 
-startServer();
